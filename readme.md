@@ -6,8 +6,8 @@ To **install** or **update** Atlassian Developer Stack (ads) you should run the 
 To do that, you may either download and run the script manually, or use the following cURL or Wget command:
 
 ```sh
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh | bash
+curl -o- https://bitbucket.org/phall_atlassian/docker-developer-stack/raw/HEAD/install.sh | bash
 ```
 ```sh
-wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh | bash
+wget -qO- https://bitbucket.org/phall_atlassian/docker-developer-stack/raw/HEAD/install.sh | bash
 ```
