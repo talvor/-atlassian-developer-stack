@@ -2,9 +2,9 @@
 
 #global variables
 DEBUG=true
-ASD_DIRECTORY_PATH="/Users/$USER/.atlassian/asd"
-MKDIR="/bin/mkdir -p"
-GIT="/usr/local/bin/git"
+ASD_DIRECTORY_PATH="$HOME/.atlassian/asd"
+MKDIR="$(which mkdir) -p"
+GIT="$(which git)"
 ASD_REPOSITORY="git@bitbucket.org:phall_atlassian/atlassian-developer-stack.git"
 
 install()
@@ -55,7 +55,7 @@ setUpAsdDirectory()
 cloneRepository()
 {
    if [ `ls -A $ASD_DIRECTORY_PATH | wc -l` -eq 0 ]; then
-        log "Clonning the repository"
+        log "Cloning the repository"
         $GIT clone $ASD_REPOSITORY $ASD_DIRECTORY_PATH
    else 
         log "Updating the repository"
