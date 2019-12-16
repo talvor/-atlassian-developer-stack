@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ ! -d ~/data/.git ]; then
-  git clone git@$GIT_REPO ~/data
+  git clone GIT_CLONE_URL ~/data
 fi;
 
 exec "$@"

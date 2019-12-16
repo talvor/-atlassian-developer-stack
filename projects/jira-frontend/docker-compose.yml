@@ -7,14 +7,13 @@ services:
       dockerfile: Dockerfile
       args:
         - USER=${USER}
-        - GIT_HOST=bitbucket.org
     hostname: jira-frontend
     command: code-server --auth none ~/data/
     stdin_open: true
     tty: true
     environment: 
       - TERM=xterm-256color
-      - GIT_REPO=bitbucket.org:phall_atlassian/atlassian-developer-stack.git
+      - GIT_CLONE_URL=ssh://git@stash.atlassian.com:7997/jiracloud/jira-frontend.git
     volumes:
       - ~/.ssh:/home/${USER}/.ssh
       - ~/.gitconfig:/home/${USER}/.gitconfig
