@@ -1,0 +1,26 @@
+version: "3.7"
+services:
+  dev:
+    container_name: jira-frontend
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - USER=${USER}
+    hostname: jira-frontend
+    command: code-server --auth none ~/data/
+    stdin_open: true
+    tty: true
+    environment: 
+      - TERM=xterm-256color
+      - GIT_CLONE_URL=ssh://git@stash.atlassian.com:7997/jiracloud/jira-frontend.git
+    volumes:
+      - ~/.ssh:/home/${USER}/.ssh
+      - ~/.gitconfig:/home/${USER}/.gitconfig
+      - data:/home/${USER}/data
+      - code-server:/home/${USER}/.local/share/code-server
+    ports:
+      - "8080:8080"
+volumes:
+  data:
+  code-server:
