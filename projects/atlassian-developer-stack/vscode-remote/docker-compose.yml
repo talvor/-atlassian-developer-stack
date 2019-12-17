@@ -12,4 +12,4 @@ services:
     volumes:
       - ~/.ssh:/home/node/.ssh
       - ~/.gitconfig:/home/node/.gitconfig
-      - ./data:/home/node/workspace
+      - ./workspace:/home/node/workspace
