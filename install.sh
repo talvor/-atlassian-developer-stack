@@ -4,6 +4,7 @@
 DEBUG=true
 ASD_DIRECTORY_PATH="$HOME/.atlassian/asd"
 ASD_CONFIG_PATH="$HOME/.atlassian/asd/.config"
+ASD_WORKSPACE_CONFIG="$ASD_CONFIG_PATH/workspace"
 MKDIR="$(which mkdir) -p"
 GIT="$(which git)"
 ASD_REPOSITORY="git@bitbucket.org:phall_atlassian/atlassian-developer-stack.git"
@@ -13,6 +14,7 @@ install() {
     setUpAsdDirectory
     cloneRepository
     createSymbolicLinkToAsdSetup
+    setWorkspaceDirectory
 }
 
 log() {
@@ -42,7 +44,6 @@ setUpAsdDirectory() {
     if [ ! -d $ASD_DIRECTORY_PATH ]; then
         log "The configuration folder '$ASD_DIRECTORY_PATH' does not exist, let's create it"
         $MKDIR $ASD_DIRECTORY_PATH
-        $MKDIR $ASD_CONFIG_PATH
         log "Folder '$ASD_DIRECTORY_PATH' successfully created"
     else
         log "The configuration folder '$ASD_DIRECTORY_PATH' already exists"
@@ -68,6 +69,23 @@ createSymbolicLinkToAsdSetup() {
     fi
 
     $(ln -s $ASD_DIRECTORY_PATH/setup.sh /usr/local/bin/asd-setup)
+}
+
+setWorkspaceDirectory() {
+    read -p "Please, inform the path to your workspace (directory where you keep your projects) -> " pathToWorkspace
+    if [ ! -d $pathToWorkspace ]; then
+        log "The path '$pathToWorkspace' is either incorrect or does not exist, please try again!"
+        setWorkspaceDirectory
+    fi
+
+    if [ ! -d $ASD_CONFIG_PATH ]; then
+        log "Creating the config folder '$ASD_CONFIG_PATH'"
+        $MKDIR $ASD_CONFIG_PATH
+    fi
+
+    log "Overwriting the content of the config file '$ASD_WORKSPACE_CONFIG' with '$pathToWorkspace'"
+    echo $pathToWorkspace > $ASD_WORKSPACE_CONFIG
+
 }
 
 # Running the Installation
