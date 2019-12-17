@@ -44,8 +44,8 @@ RUN adduser ${USER} sudo
 # Setup default user, when enter docker container
 USER ${UID}:${GID}
 RUN mkdir -p /home/${USER}/.local/share/code-server
-RUN mkdir /home/${USER}/data
-RUN chown ${UID}:${GID} /home/${USER}/data
+RUN mkdir /home/${USER}/workspace
+RUN chown ${UID}:${GID} /home/${USER}/workspace
 WORKDIR /home/${USER}
 
 EXPOSE 8080
