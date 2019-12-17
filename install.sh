@@ -52,7 +52,7 @@ setUpAsdDirectory() {
 
 # Clone the ASD repository
 cloneRepository() {
-    if [ $(ls -A $ASD_DIRECTORY_PATH | wc -l) -eq 1 ]; then
+    if [ $(ls -A $ASD_DIRECTORY_PATH | wc -l) -eq 0 ]; then
         log "Cloning the repository"
         $GIT clone $ASD_REPOSITORY $ASD_DIRECTORY_PATH
     else
@@ -78,6 +78,12 @@ setWorkspaceDirectory() {
         setWorkspaceDirectory
     fi
 
+    if [ ! -d $ASD_CONFIG_PATH ]; then
+        log "Creating the config folder '$ASD_CONFIG_PATH'"
+        $MKDIR $ASD_CONFIG_PATH
+    fi
+
+    log "Overwriting the content of the config file '$ASD_WORKSPACE_CONFIG' with '$pathToWorkspace'"
     echo $pathToWorkspace > $ASD_WORKSPACE_CONFIG
 
 }
