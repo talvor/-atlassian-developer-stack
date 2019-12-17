@@ -11,6 +11,7 @@ install() {
     checkDependencies
     setUpAsdDirectory
     cloneRepository
+    createSymbolicLinkToAsdSetup
 }
 
 log() {
@@ -57,7 +58,17 @@ cloneRepository() {
     fi
 }
 
+# Create the symbolic link which will point to setup.sh
+createSymbolicLinkToAsdSetup() {
+
+    if [[ -L "/usr/local/bin/asd-setup" ]]; then
+        $(rm /usr/local/bin/asd-setup)
+    fi
+
+    $(ln -s $ASD_DIRECTORY_PATH/setup.sh /usr/local/bin/asd-setup)
+}
+
 # Running the Installation
 echo "Installing Atlassian Developer Stack (asd)"
 install
-echo "Atlassian Developer Stack (asd) successfully installed"
+echo "Atlassian Developer Stack (asd) successfully installed. Run the command asd-setup in your terminal to configure your project."
