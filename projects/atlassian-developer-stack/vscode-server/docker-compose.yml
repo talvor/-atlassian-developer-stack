@@ -17,7 +17,7 @@ services:
     volumes:
       - ~/.ssh:/home/${USER}/.ssh
       - ~/.gitconfig:/home/${USER}/.gitconfig
-      - data:/home/${USER}/data
+      - ./workspace:/home/${USER}/workspace
       - code-server:/home/${USER}/.local/share/code-server
     ports:
       - "8080:8080"
