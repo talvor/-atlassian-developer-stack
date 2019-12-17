@@ -1,0 +1,15 @@
+version: "3.7"
+services:
+  dev:
+    container_name: jira-frontend-vscode-remote
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: /bin/sh -c "while sleep 1000; do :; done"
+    hostname: asd
+    environment: 
+      - GIT_CLONE_URL=ssh://git@stash.atlassian.com:7997/jiracloud/jira-frontend.git
+    volumes:
+      - ~/.ssh:/home/node/.ssh
+      - ~/.gitconfig:/home/node/.gitconfig
+      - ./data:/home/node/workspace

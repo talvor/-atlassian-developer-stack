@@ -1,7 +1,7 @@
 version: "3.7"
 services:
   dev:
-    container_name: atlassian-developer-stack
+    container_name: atlassian-developer-stack-vscode-server
     build:
       context: .
       dockerfile: Dockerfile

@@ -1,14 +1,14 @@
 version: "3.7"
 services:
   dev:
-    container_name: jira-frontend
+    container_name: jira-frontend-vscode-server
     build:
       context: .
       dockerfile: Dockerfile
       args:
         - USER=${USER}
     hostname: jira-frontend
-    command: code-server --auth none ~/data/
+    command: code-server --auth none /home/${USER}/data/
     stdin_open: true
     tty: true
     environment: 
@@ -17,10 +17,9 @@ services:
     volumes:
       - ~/.ssh:/home/${USER}/.ssh
       - ~/.gitconfig:/home/${USER}/.gitconfig
-      - data:/home/${USER}/data
+      - ./data:/home/${USER}/data
       - code-server:/home/${USER}/.local/share/code-server
     ports:
       - "8080:8080"
 volumes:
-  data:
   code-server:
