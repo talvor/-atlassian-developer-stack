@@ -1,0 +1,26 @@
+commonFiles:
+  dockerfile: common/Dockerfile
+  dockerCompose: common/docker-compose.yml
+  dockerEntrypoint: common/docker-entrypoint.sh
+
+projectID:
+  - asd
+  - jiraFrontend
+
+projects:
+  asd:
+    name: Atlassian Docker Stack (asd)
+    environments:
+      codeServer:
+        name: Visual Studio Code server
+        dockerfile: projects/atlassian-developer-stack/Dockerfile
+        dockerCompose: projects/atlassian-developer-stack/docker-compose.yml
+        dockerEntrypoint: projects/atlassian-developer-stack/docker-entrypoint.sh
+  jiraFrontend:
+    name: Jira Frontend
+    environments:
+      codeServer:
+        name: Visual Studio Code server
+        dockerfile: projects/jira-frontend/Dockerfile
+        dockerCompose: projects/jira-frontend/docker-compose.yml
+        dockerEntrypoint: projects/jira-frontend/docker-entrypoint.sh
