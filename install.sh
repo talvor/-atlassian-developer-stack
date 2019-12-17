@@ -71,6 +71,7 @@ createSymbolicLinkToAsdSetup() {
     $(ln -s $ASD_DIRECTORY_PATH/setup.sh /usr/local/bin/asd-setup)
 }
 
+# Set the workspace directory to a config file
 setWorkspaceDirectory() {
     read -p "Please, inform the path to your workspace (directory where you keep your projects) -> " pathToWorkspace
     if [ ! -d $pathToWorkspace ]; then
@@ -85,7 +86,6 @@ setWorkspaceDirectory() {
 
     log "Overwriting the content of the config file '$ASD_WORKSPACE_CONFIG' with '$pathToWorkspace'"
     echo $pathToWorkspace > $ASD_WORKSPACE_CONFIG
-
 }
 
 # Running the Installation
