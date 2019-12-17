@@ -3,6 +3,7 @@
 #global variables
 DEBUG=true
 ASD_DIRECTORY_PATH="$HOME/.atlassian/asd"
+ASD_CONFIG_PATH="$HOME/.atlassian/asd/.config"
 MKDIR="$(which mkdir) -p"
 GIT="$(which git)"
 ASD_REPOSITORY="git@bitbucket.org:phall_atlassian/atlassian-developer-stack.git"
@@ -41,6 +42,7 @@ setUpAsdDirectory() {
     if [ ! -d $ASD_DIRECTORY_PATH ]; then
         log "The configuration folder '$ASD_DIRECTORY_PATH' does not exist, let's create it"
         $MKDIR $ASD_DIRECTORY_PATH
+        $MKDIR $ASD_CONFIG_PATH
         log "Folder '$ASD_DIRECTORY_PATH' successfully created"
     else
         log "The configuration folder '$ASD_DIRECTORY_PATH' already exists"
