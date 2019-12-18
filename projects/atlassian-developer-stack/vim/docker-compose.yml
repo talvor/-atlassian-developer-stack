@@ -1,0 +1,23 @@
+version: "3.7"
+services:
+  dev:
+    container_name: ads-vim
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - USERNAME=${USER}
+        - USER_UID=1001
+    command: "/bin/bash"
+    hostname: ads
+    stdin_open: true
+    tty: true
+    environment: 
+      - GIT_CLONE_URL=git@bitbucket.org:phall_atlassian/atlassian-developer-stack.git
+      - TERM=xterm-256color
+    volumes:
+      - ~/.ssh:/home/${USER}/.ssh
+      - ~/.gitconfig:/home/${USER}/.gitconfig
+      - workspace:/home/${USER}/workspace
+volumes:
+    workspace:
