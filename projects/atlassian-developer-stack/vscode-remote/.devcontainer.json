@@ -4,6 +4,7 @@
     "service": "dev",
     "workspaceFolder": "/home/${localEnv:USER}/workspace",
     "shutdownAction": "stopCompose",
+    "postCreateCommand": ". /usr/local/bin/docker-entrypoint.sh",
     
     // Use 'settings' to set *default* container specific settings.json values on container create. 
     // You can edit these settings after create using File > Preferences > Settings > Remote.

@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 #global variables
 CLEAR="$(which clear)"
 CAT="$(which cat)"
