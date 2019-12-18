@@ -2,18 +2,18 @@
 
 #global variables
 DEBUG=true
-ASD_DIRECTORY_PATH="$HOME/.atlassian/asd"
-ASD_CONFIG_PATH="$HOME/.atlassian/asd/.config"
-ASD_WORKSPACE_CONFIG="$ASD_CONFIG_PATH/workspace"
+ADS_DIRECTORY_PATH="$HOME/.atlassian/ads"
+ADS_CONFIG_PATH="$HOME/.atlassian/ads/.config"
+ADS_WORKSPACE_CONFIG="$ADS_CONFIG_PATH/workspace"
 MKDIR="$(which mkdir) -p"
 GIT="$(which git)"
-ASD_REPOSITORY="git@bitbucket.org:phall_atlassian/atlassian-developer-stack.git"
+ADS_REPOSITORY="git@bitbucket.org:phall_atlassian/atlassian-developer-stack.git"
 
 install() {
     checkDependencies
-    setUpAsdDirectory
+    setUpAdsDirectory
     cloneRepository
-    createSymbolicLinkToAsdSetup
+    createSymbolicLinkToAdsSetup
     setWorkspaceDirectory
 }
 
@@ -23,7 +23,7 @@ log() {
     fi
 }
 
-# Check all dependencies needed to run ASD, it will abort the execution if any of the dependencies is missing.
+# Check all dependencies needed to run ADS, it will abort the execution if any of the dependencies is missing.
 checkDependencies() {
     log "Checking all dependencies needed before we start ... "
 
@@ -38,37 +38,37 @@ checkDependencies() {
     log "Nice!!! You have all dependencies installed :-) ... Let's move on!"
 }
 
-# Set up the ASD directory, it will create the directory ($ASD_DIRECTORY_PATH) for current user if it does not exits.
-setUpAsdDirectory() {
-    log "Creating the asd's configuration folder for user '$USER' which is the user who is running this script"
-    if [ ! -d $ASD_DIRECTORY_PATH ]; then
-        log "The configuration folder '$ASD_DIRECTORY_PATH' does not exist, let's create it"
-        $MKDIR $ASD_DIRECTORY_PATH
-        log "Folder '$ASD_DIRECTORY_PATH' successfully created"
+# Set up the ADS directory, it will create the directory ($ADS_DIRECTORY_PATH) for current user if it does not exits.
+setUpAdsDirectory() {
+    log "Creating the Ads's configuration folder for user '$USER' which is the user who is running this script"
+    if [ ! -d $ADS_DIRECTORY_PATH ]; then
+        log "The configuration folder '$ADS_DIRECTORY_PATH' does not exist, let's create it"
+        $MKDIR $ADS_DIRECTORY_PATH
+        log "Folder '$ADS_DIRECTORY_PATH' successfully created"
     else
-        log "The configuration folder '$ASD_DIRECTORY_PATH' already exists"
+        log "The configuration folder '$ADS_DIRECTORY_PATH' already exists"
     fi
 }
 
-# Clone the ASD repository
+# Clone the ADS repository
 cloneRepository() {
-    if [ $(ls -A $ASD_DIRECTORY_PATH | wc -l) -eq 0 ]; then
+    if [ $(ls -A $ADS_DIRECTORY_PATH | wc -l) -eq 0 ]; then
         log "Cloning the repository"
-        $GIT clone $ASD_REPOSITORY $ASD_DIRECTORY_PATH
+        $GIT clone $ADS_REPOSITORY $ADS_DIRECTORY_PATH
     else
         log "Updating the repository"
-        $GIT -C $ASD_DIRECTORY_PATH pull
+        $GIT -C $ADS_DIRECTORY_PATH pull
     fi
 }
 
 # Create the symbolic link which will point to setup.sh
-createSymbolicLinkToAsdSetup() {
+createSymbolicLinkToAdsSetup() {
 
-    if [[ -L "/usr/local/bin/asd-setup" ]]; then
-        $(rm /usr/local/bin/asd-setup)
+    if [[ -L "/usr/local/bin/ads-setup" ]]; then
+        $(rm /usr/local/bin/ads-setup)
     fi
 
-    $(ln -s $ASD_DIRECTORY_PATH/setup.sh /usr/local/bin/asd-setup)
+    $(ln -s $ADS_DIRECTORY_PATH/setup.sh /usr/local/bin/ads-setup)
 }
 
 # Set the workspace directory to a config file
@@ -79,16 +79,16 @@ setWorkspaceDirectory() {
         setWorkspaceDirectory
     fi
 
-    if [ ! -d $ASD_CONFIG_PATH ]; then
-        log "Creating the config folder '$ASD_CONFIG_PATH'"
-        $MKDIR $ASD_CONFIG_PATH
+    if [ ! -d $ADS_CONFIG_PATH ]; then
+        log "Creating the config folder '$ADS_CONFIG_PATH'"
+        $MKDIR $ADS_CONFIG_PATH
     fi
 
-    log "Overwriting the content of the config file '$ASD_WORKSPACE_CONFIG' with '$pathToWorkspace'"
-    echo $pathToWorkspace > $ASD_WORKSPACE_CONFIG
+    log "Overwriting the content of the config file '$ADS_WORKSPACE_CONFIG' with '$pathToWorkspace'"
+    echo $pathToWorkspace > $ADS_WORKSPACE_CONFIG
 }
 
 # Running the Installation
-echo "Installing Atlassian Developer Stack (asd)"
+echo "Installing Atlassian Developer Stack (ads)"
 install
-echo "Atlassian Developer Stack (asd) successfully installed. Run the command asd-setup in your terminal to configure your project."
+echo "Atlassian Developer Stack (ads) successfully installed. Run the command ads-setup in your terminal to configure your project."

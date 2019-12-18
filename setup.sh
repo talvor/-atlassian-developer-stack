@@ -3,7 +3,7 @@
 #global variables
 CLEAR="$(which clear)"
 CAT="$(which cat)"
-ASD_DIRECTORY_PROJECT_PATH="$HOME/.atlassian/asd/projects"
+ADS_DIRECTORY_PROJECT_PATH="$HOME/.atlassian/ads/projects"
 
 setup() {
     banner
@@ -30,7 +30,7 @@ menu() {
     echo -e "Choose one of the projects listed below\n"
 
     count=1
-    for path in $(find $ASD_DIRECTORY_PROJECT_PATH/* -mindepth 1 -maxdepth 2 -type d); do
+    for path in $(find $ADS_DIRECTORY_PROJECT_PATH/* -mindepth 1 -maxdepth 2 -type d); do
         echo "$count - $path"
         let "count += 1"
     done
@@ -46,7 +46,7 @@ menu() {
     
     if [ "$option" -lt "$count" ]; then
         pathCount=1
-        for path in $(find $ASD_DIRECTORY_PROJECT_PATH/* -mindepth 1 -maxdepth 2 -type d); do
+        for path in $(find $ADS_DIRECTORY_PROJECT_PATH/* -mindepth 1 -maxdepth 2 -type d); do
             if [ "$pathCount" == "$option" ]; then
                 echo "Start copying from $path"
                 break
