@@ -5,6 +5,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        - USERNAME=${USER}
+        - USER_UID=1001
     command: /bin/sh -c "while sleep 1000; do :; done"
     hostname: asd
     environment: 
@@ -12,4 +15,6 @@ services:
     volumes:
       - ~/.ssh:/home/node/.ssh
       - ~/.gitconfig:/home/node/.gitconfig
-      - ./workspace:/home/node/workspace
+      - workspace:/home/node/workspace
+volumes:
+    workspace:
