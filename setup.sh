@@ -3,15 +3,15 @@
 #global variables
 CLEAR="$(which clear)"
 CAT="$(which cat)"
+ASD_DIRECTORY_PROJECT_PATH="$HOME/.atlassian/asd/projects"
 
-setup(){
+setup() {
     banner
     menu
 }
 
-
-banner(){
-cat << "EOF"
+banner() {
+    cat <<"EOF"
 
 ########################################################################################################################################################################
 #     _      _     _                       _                     ____                          _                                   ____    _                    _      #
@@ -26,41 +26,51 @@ cat << "EOF"
 EOF
 }
 
-menu(){
-CAT << "EOF"
+menu() {
+    echo -e "Choose one of the projects listed below\n"
 
-    Choose one of the options below to set up your project
+    count=1
+    for path in $(find $ASD_DIRECTORY_PROJECT_PATH/* -mindepth 1 -maxdepth 2 -type d); do
+        echo "$count - $path"
+        let "count += 1"
+    done
 
-    1 - VSCode
-    2 - Exit
+    echo "Q - Quit"
 
+    echo -e "\n"
+    read -p "What is your choice? " option
+
+    if [ "$option" == "q" ] || [ "$option" == "Q" ]; then
+        echo "Bye bye" && exit 0
+    fi
+    
+    if [ "$option" -lt "$count" ]; then
+        pathCount=1
+        for path in $(find $ASD_DIRECTORY_PROJECT_PATH/* -mindepth 1 -maxdepth 2 -type d); do
+            if [ "$pathCount" == "$option" ]; then
+                echo "Start copying from $path"
+                break
+            fi
+            let "pathCount += 1"
+        done
+    else
+        CLEAR
+        CAT <<"EOF"
+                                                            #####
+                                                        #### _\_  ________
+                                                        ##=-[.].]| \      \
+                                                        #(    _\ |  |------|
+                                                        #   __| |  ||||||||
+                                                        \  _/  |  ||||||||
+                                                    .--'--'-. |  | ____ |
+                                                    / __      `|__|[o__o]|
+                                                    _(____nm_______ /____\____
+    
 EOF
-
-read -p "What is your choice? " option
-if [ "$option" == "1" ]; then
-    echo "you choose VSCode"
-elif [ "$option" == "2" ]; then
-    echo "Bye bye" && exit 0;
-else 
-CLEAR
-CAT << "EOF"
-                                                        #####
-                                                    #### _\_  ________
-                                                    ##=-[.].]| \      \
-                                                    #(    _\ |  |------|
-                                                    #   __| |  ||||||||
-                                                    \  _/  |  ||||||||
-                                                .--'--'-. |  | ____ |
-                                                / __      `|__|[o__o]|
-                                                _(____nm_______ /____\____
-
-EOF
-    echo "We don't recognize your choice '$option', but don't worry, I'm going to show the menu and you can try again!"
-    menu
-fi
+        echo "We don't recognize your choice '$option', but don't worry, I'm going to show the menu and you can try again!"
+        menu
+    fi
 }
 
 #Script execution
 setup
-
-    
