@@ -5,6 +5,10 @@
 CLEAR="$(which clear)"
 CAT="$(which cat)"
 ADS_DIRECTORY_PROJECT_PATH="$HOME/.atlassian/ads/projects"
+ADS_DIRECTORY_WORKSPACE_PATH="$HOME/.atlassian/ads/.config/workspace"
+MKDIR="$(which mkdir) -p"
+CP="$(which cp)"
+RM="$(which rm)"
 
 setup() {
     banner
@@ -25,6 +29,20 @@ banner() {
 
 
 EOF
+}
+
+copyProjectFiles(){
+    workspacePath="$(cat $ADS_DIRECTORY_WORKSPACE_PATH)"
+    projectName=$(echo $path | cut -d '/' -f7)
+    projectPath="$workspacePath/$projectName"
+
+    if [ ! -d "$projectPath" ]; then
+        MKDIR $projectPath
+    else
+        RM $projectPath/*
+    fi
+
+    CP $1/* $projectPath
 }
 
 menu() {
@@ -49,7 +67,7 @@ menu() {
         pathCount=1
         for path in $(find $ADS_DIRECTORY_PROJECT_PATH/* -mindepth 1 -maxdepth 2 -type d); do
             if [ "$pathCount" == "$option" ]; then
-                echo "Start copying from $path"
+                copyProjectFiles $path
                 break
             fi
             let "pathCount += 1"
@@ -68,7 +86,7 @@ menu() {
                                                     _(____nm_______ /____\____
     
 EOF
-        echo "We don't recognize your choice '$option', but don't worry, I'm going to show the menu and you can try again!"
+        echo "I don't recognize your choice '$option', but don't worry, I'm going to show the menu and you can try again!"
         menu
     fi
 }
