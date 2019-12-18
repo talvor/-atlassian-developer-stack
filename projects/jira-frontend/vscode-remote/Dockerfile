@@ -15,6 +15,8 @@ ARG USERNAME=node
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 
+RUN echo "(ARGS) username=$USERNAME uid=$USER_UID"
+
 # Configure apt and install packages
 RUN apt-get update \
     && apt-get -y install --no-install-recommends apt-utils dialog 2>&1 \ 
@@ -61,6 +63,8 @@ RUN chmod 777 /usr/local/bin/docker-entrypoint.sh \
     && ln -s /usr/local/bin/docker-entrypoint.sh
 
 USER $USERNAME
+RUN mkdir /home/${USERNAME}/workspace
+RUN chown ${USER_UID}:${USER_GID} /home/${USERNAME}/workspace
+WORKDIR /home/${USERNAME}
 
 ENTRYPOINT ["docker-entrypoint.sh"]
-

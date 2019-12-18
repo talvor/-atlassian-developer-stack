@@ -5,11 +5,17 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        - USERNAME=${USER}
+        - USER_UID=1001
     command: /bin/sh -c "while sleep 1000; do :; done"
     hostname: asd
     environment: 
       - GIT_CLONE_URL=ssh://git@stash.atlassian.com:7997/jiracloud/jira-frontend.git
     volumes:
-      - ~/.ssh:/home/node/.ssh
-      - ~/.gitconfig:/home/node/.gitconfig
-      - ./workspace:/home/node/workspace
+      - ~/.ssh:/home/${USER}/.ssh
+      - ~/.gitconfig:/${USER}/node/.gitconfig
+      - ~/.npmrc:/home/${USER}/.npmrc
+      - workspace:/home/${USER}/workspace
+volumes:
+    workspace:

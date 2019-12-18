@@ -6,21 +6,19 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        - USER=${USER}
+        - USERNAME=${USER}
+        - USER_UID=1001
     hostname: asd
-    command: code-server --auth none ~/workspace:/
-    stdin_open: true
-    tty: true
+    command: code-server --auth none /home/${USER}/workspace/
     environment: 
-      - TERM=xterm-256color
       - GIT_CLONE_URL=git@bitbucket.org:phall_atlassian/atlassian-developer-stack.git
     volumes:
       - ~/.ssh:/home/${USER}/.ssh
       - ~/.gitconfig:/home/${USER}/.gitconfig
-      - ./workspace:/home/${USER}/workspace
-      - code-server:/home/${USER}/.local/share/code-server
+      - vscode-server:/home/${USER}/.local/share/code-server
+      - workspace:/home/${USER}/workspace
     ports:
       - "8080:8080"
 volumes:
-  data:
-  code-server:
+  workspace:
+  vscode-server:

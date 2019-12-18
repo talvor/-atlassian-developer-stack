@@ -1,19 +1,10 @@
-#-------------------------------------------------------------------------------------------------------------
-# Based on https://github.com/Microsoft/vscode-remote-try-node
-#-------------------------------------------------------------------------------------------------------------
+FROM ubuntu:18.04
 
-FROM node:10.16.3
-
-# Avoid warnings by switching to noninteractive
-ENV DEBIAN_FRONTEND=noninteractive
-
-# The node image comes with a base non-root 'node' user which this Dockerfile
-# gives sudo access. However, for Linux, this user's GID/UID must match your local
-# user UID/GID to avoid permission issues with bind mounts. Update USER_UID / USER_GID 
-# if yours is not 1000. See https://aka.ms/vscode-remote/containers/non-root-user.
-ARG USERNAME=node
+ARG USERNAME=docker
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
+
+RUN echo "(ARGS) username=$USERNAME uid=$USER_UID"
 
 # Configure apt and install packages
 RUN apt-get update \
@@ -21,23 +12,6 @@ RUN apt-get update \
     #
     # Verify git and needed tools are installed
     && apt-get install -y git procps \
-    #
-    # Remove outdated yarn from /opt and install via package 
-    # so it can be easily updated via apt-get upgrade yarn
-    && rm -rf /opt/yarn-* \
-    && rm -f /usr/local/bin/yarn \
-    && rm -f /usr/local/bin/yarnpkg \
-    && apt-get install -y curl apt-transport-https lsb-release \
-    && curl -sS https://dl.yarnpkg.com/$(lsb_release -is | tr '[:upper:]' '[:lower:]')/pubkey.gpg | apt-key add - 2>/dev/null \
-    && echo "deb https://dl.yarnpkg.com/$(lsb_release -is | tr '[:upper:]' '[:lower:]')/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
-    && apt-get update \
-    && apt-get -y install --no-install-recommends yarn \
-    #
-    # Install eslint globally
-    && npm install -g eslint \
-    #
-    # Install nodemon globally
-    && npm install -g nodemon \
     #
     # Create a non-root user to use if preferred - see https://aka.ms/vscode-remote/containers/non-root-user.
     && if [ "$USER_GID" != "1000" ]; then groupadd --gid $USER_GID $USERNAME; fi \
@@ -53,14 +27,16 @@ RUN apt-get update \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/*
 
-# Switch back to dialog for any ad-hoc use of apt-get
-ENV DEBIAN_FRONTEND=
+ENV SHELL /bin/bash
 
 COPY docker-entrypoint.sh /usr/local/bin/
 RUN chmod 777 /usr/local/bin/docker-entrypoint.sh \
     && ln -s /usr/local/bin/docker-entrypoint.sh
 
-USER $USERNAME
+# Setup default user, when enter docker container
+USER ${USERNAME}
+RUN mkdir /home/${USERNAME}/workspace
+RUN chown ${USER_UID}:${USER_GID} /home/${USERNAME}/workspace
+WORKDIR /home/${USERNAME}
 
 ENTRYPOINT ["docker-entrypoint.sh"]
-
