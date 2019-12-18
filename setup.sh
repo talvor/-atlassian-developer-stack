@@ -31,7 +31,7 @@ menu() {
 
     count=1
     for path in $(find $ADS_DIRECTORY_PROJECT_PATH/* -mindepth 1 -maxdepth 2 -type d); do
-        echo "$count - $path"
+        echo "$count - Project="$(echo $path | cut -d '/' -f7)" IDE=$(echo $path | cut -d'/' -f8)"
         let "count += 1"
     done
 
