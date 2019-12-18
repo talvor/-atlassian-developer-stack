@@ -13,8 +13,8 @@ services:
     environment: 
       - GIT_CLONE_URL=git@bitbucket.org:phall_atlassian/atlassian-developer-stack.git
     volumes:
-      - ~/.ssh:/home/node/.ssh
-      - ~/.gitconfig:/home/node/.gitconfig
-      - workspace:/home/node/workspace
+      - ~/.ssh:/home/${USER}/.ssh
+      - ~/.gitconfig:/home/${USER}/.gitconfig
+      - workspace:/home/${USER}/workspace
 volumes:
     workspace:
