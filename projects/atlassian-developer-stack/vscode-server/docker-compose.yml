@@ -1,14 +1,14 @@
 version: "3.7"
 services:
   dev:
-    container_name: atlassian-developer-stack-vscode-server
+    container_name: ads-vscode-server
     build:
       context: .
       dockerfile: Dockerfile
       args:
         - USERNAME=${USER}
         - USER_UID=1001
-    hostname: asd
+    hostname: ads
     command: code-server --auth none /home/${USER}/workspace/
     environment: 
       - GIT_CLONE_URL=git@bitbucket.org:phall_atlassian/atlassian-developer-stack.git

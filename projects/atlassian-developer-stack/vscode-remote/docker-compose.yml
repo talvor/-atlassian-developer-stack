@@ -1,7 +1,7 @@
 version: "3.7"
 services:
   dev:
-    container_name: asd-vscode-remote
+    container_name: ads-vscode-remote
     build:
       context: .
       dockerfile: Dockerfile
@@ -9,7 +9,7 @@ services:
         - USERNAME=${USER}
         - USER_UID=1001
     command: /bin/sh -c "while sleep 1000; do :; done"
-    hostname: asd
+    hostname: ads
     environment: 
       - GIT_CLONE_URL=git@bitbucket.org:phall_atlassian/atlassian-developer-stack.git
     volumes:
