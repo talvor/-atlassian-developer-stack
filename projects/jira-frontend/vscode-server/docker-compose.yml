@@ -12,6 +12,7 @@ services:
     command: code-server --auth none /home/${USER}/workspace/
     environment: 
       - GIT_CLONE_URL=ssh://git@stash.atlassian.com:7997/jiracloud/jira-frontend.git
+      - NODE_OPTIONS=--max_old_space_size=4096
     ports:
       - "3000:3000"
       - "3443:3443"
