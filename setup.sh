@@ -8,6 +8,8 @@ ADS_DIRECTORY_WORKSPACE_PATH="$HOME/.atlassian/ads/.config/workspace"
 MKDIR="$(which mkdir) -p"
 CP="$(which cp) -r"
 RM="$(which rm) -r"
+BLUE="tput setaf 4"
+RESET_COLOR="tput sgr0"
 
 setup() {
     banner
@@ -15,6 +17,7 @@ setup() {
 }
 
 banner() {
+    $BLUE
     cat <<"EOF"
 
 ########################################################################################################################################################################
@@ -28,6 +31,7 @@ banner() {
 
 
 EOF
+    $RESET_COLOR
 }
 
 copyProjectFiles(){

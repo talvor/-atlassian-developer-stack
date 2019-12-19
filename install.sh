@@ -8,6 +8,9 @@ ADS_WORKSPACE_CONFIG="$ADS_CONFIG_PATH/workspace"
 MKDIR="$(which mkdir) -p"
 GIT="$(which git)"
 ADS_REPOSITORY="git@bitbucket.org:phall_atlassian/atlassian-developer-stack.git"
+GREEN="tput setaf 2"
+RED="tput setaf 1"
+RESET_COLOR="tput sgr0"
 
 install() {
     checkDependencies
@@ -20,6 +23,7 @@ install() {
 log() {
     if "$DEBUG" = true; then
         echo $(date "+%d-%m-%Y - %T") : $1
+        $RESET_COLOR
     fi
 }
 
@@ -75,6 +79,7 @@ createSymbolicLinkToAdsSetup() {
 setWorkspaceDirectory() {
     read -p "Please, inform the path to your workspace (directory where you keep your projects) -> " pathToWorkspace
     if [ ! -d $pathToWorkspace ]; then
+        $RED
         log "The path '$pathToWorkspace' is either incorrect or does not exist, please try again!"
         setWorkspaceDirectory
     fi
@@ -83,7 +88,6 @@ setWorkspaceDirectory() {
         log "Creating the config folder '$ADS_CONFIG_PATH'"
         $MKDIR $ADS_CONFIG_PATH
     fi
-
     log "Overwriting the content of the config file '$ADS_WORKSPACE_CONFIG' with '$pathToWorkspace'"
     echo $pathToWorkspace > $ADS_WORKSPACE_CONFIG
 }
@@ -91,4 +95,15 @@ setWorkspaceDirectory() {
 # Running the Installation
 echo "Installing Atlassian Developer Stack (ads)"
 install
-echo "Atlassian Developer Stack (ads) successfully installed. Run the command ads-setup in your terminal to configure your project."
+
+$GREEN
+cat <<"EOF"
+
+
+###################################################################################################################################
+#  Atlassian Developer Stack (ads) successfully installed. Run the command ads-setup in your terminal to configure your project.  #
+###################################################################################################################################
+
+
+EOF
+$RESET_COLOR
