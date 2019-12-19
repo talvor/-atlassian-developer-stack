@@ -1,14 +1,13 @@
 #!/bin/bash
 
-
 #global variables
 CLEAR="$(which clear)"
 CAT="$(which cat)"
 ADS_DIRECTORY_PROJECT_PATH="$HOME/.atlassian/ads/projects"
 ADS_DIRECTORY_WORKSPACE_PATH="$HOME/.atlassian/ads/.config/workspace"
 MKDIR="$(which mkdir) -p"
-CP="$(which cp)"
-RM="$(which rm)"
+CP="$(which cp) -r"
+RM="$(which rm) -r"
 
 setup() {
     banner
@@ -37,12 +36,12 @@ copyProjectFiles(){
     projectPath="$workspacePath/$projectName"
 
     if [ ! -d "$projectPath" ]; then
-        MKDIR $projectPath
+        $MKDIR $projectPath
     else
-        RM $projectPath/*
+        $RM $projectPath/
     fi
 
-    CP $1/* $projectPath
+    $CP $1/ $projectPath/
 }
 
 menu() {
