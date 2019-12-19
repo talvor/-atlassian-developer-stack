@@ -5,6 +5,7 @@
     "workspaceFolder": "/home/${localEnv:USER}/workspace",
     "shutdownAction": "stopCompose",
     "postCreateCommand": ". /usr/local/bin/docker-entrypoint.sh",
+    "appPort": [ 3000, 3443, 4040 ],
 
     // Use 'settings' to set *default* container specific settings.json values on container create. 
     // You can edit these settings after create using File > Preferences > Settings > Remote.

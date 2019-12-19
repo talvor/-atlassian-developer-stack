@@ -12,14 +12,17 @@ services:
     command: code-server --auth none /home/${USER}/workspace/
     environment: 
       - GIT_CLONE_URL=ssh://git@stash.atlassian.com:7997/jiracloud/jira-frontend.git
+    ports:
+      - "3000:3000"
+      - "3443:3443"
+      - "4040:4040"
+      - "8080:8080"
     volumes:
       - ~/.ssh:/home/${USER}/.ssh
       - ~/.gitconfig:/home/${USER}/.gitconfig
       - ~/.npmrc:/home/${USER}/.npmrc
       - vscode-server:/home/${USER}/.local/share/code-server
       - workspace:/home/${USER}/workspace
-    ports:
-      - "8080:8080"
 volumes:
   workspace:
   vscode-server:
