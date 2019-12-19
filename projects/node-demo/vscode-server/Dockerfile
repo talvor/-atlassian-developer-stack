@@ -110,5 +110,5 @@ RUN mkdir -p /home/${USERNAME}/.local/share/code-server
 RUN chown ${USER_UID}:${USER_GID} /home/${USERNAME}/.local/share/code-server
 WORKDIR /home/${USERNAME}
 
-EXPOSE 8080
+EXPOSE 3000 8080
 ENTRYPOINT ["docker-entrypoint.sh"]
