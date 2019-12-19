@@ -21,6 +21,7 @@ services:
       - ~/.ssh:/home/${USER}/.ssh
       - ~/.gitconfig:/home/${USER}/.gitconfig
       - ~/.npmrc:/home/${USER}/.npmrc
+      - ~/.ngrok2:/home/${USER}/.ngrok2
       - vscode-server:/home/${USER}/.local/share/code-server
       - workspace:/home/${USER}/workspace
 volumes:
