@@ -1,2 +1,2 @@
 #!/bin/bash
-docker-compose run --service-ports dev
+docker-compose --project-name jira-frontend-vscode-server run --service-ports dev
