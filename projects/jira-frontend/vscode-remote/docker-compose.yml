@@ -12,10 +12,15 @@ services:
     hostname: asd
     environment: 
       - GIT_CLONE_URL=ssh://git@stash.atlassian.com:7997/jiracloud/jira-frontend.git
+    ports:
+      - "3000:3000"
+      - "3443:3443"
+      - "4040:4040"
     volumes:
       - ~/.ssh:/home/${USER}/.ssh
-      - ~/.gitconfig:/${USER}/node/.gitconfig
+      - ~/.gitconfig:/home/${USER}/.gitconfig
       - ~/.npmrc:/home/${USER}/.npmrc
+      - ~/.ngrok2:/home/${USER}/.ngrok2
       - workspace:/home/${USER}/workspace
 volumes:
     workspace:

@@ -73,6 +73,17 @@ RUN \
 	rm -rf \
 		/tmp/*
 
+# Install ngrok
+RUN \
+	echo "**** installing ngrok****" && \
+	curl -o \
+	/tmp/ngrok.zip -L \
+			"https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip" && \
+	unzip /tmp/ngrok.zip -d /usr/bin/ && \
+	echo "**** clean up ****" && \
+	rm -rf \
+		/tmp/*
+        
 # Switch back to dialog for any ad-hoc use of apt-get
 ENV DEBIAN_FRONTEND=
 
